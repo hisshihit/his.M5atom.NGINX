@@ -87,6 +87,7 @@ export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 * M5Stick-CでJsonをPOSTする　https://qiita.com/poruruba/items/4bf6a52520e431a8f4a5
 
 ## 4.2 サーバ側
+* njs-examples https://github.com/xeioex/njs-examples
 * njsリファンレンス https://nginx.org/en/docs/njs/reference.html
 * http API https://nginx.org/en/docs/http/ngx_http_js_module.html
 * ファイルシステムAPI https://nginx.org/en/docs/njs/reference.html#njs_api_fs
