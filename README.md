@@ -53,6 +53,8 @@ http {
 
 ## 3.2 <a href="./Server.root/etc/nginx/sites-available/default">default</a>
 * 各仮想サーバの設定ファイル `default`は個別仮想サーバの設定に合致しない場合の設定を記載する
+* ubuntu上でのファイルの場所は`/etc/nginx/site-available/default`
+* `/etc/nginx/site-available/`内の設定ファイルは`/etc/nginx/site-enabled/`にシンボリックリンクを張ることで動作する
 * 特定のURLにアクセスした場合に呼び出すnjsのスクリプトの設定は下記の部分
 ```
     location /GETURI {
@@ -64,6 +66,8 @@ http {
 
 ## 3.3 <a href="./Server.root/etc/nginx/js/his.js">his.js</a>
 * njsのスクリプト本体
+* ubuntu上でのファイルの場所は`/etc/nginx/js/his.js`
+* 上記は<a href="./Server.root/etc/nginx/nginx.conf">nginx.conf</a>で設定している
 * `getUri`関数の部分は下記
 ```
 function getUri(r) {
