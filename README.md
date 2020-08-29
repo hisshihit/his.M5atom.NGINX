@@ -71,7 +71,7 @@ function getUri(r) {
     r.return(200, r.uri);
 }
 ```
-* `r`はnjs組み込みクラスでHTTPのRequest内容が格納されている
+* `r`はnjs組み込みオブジェクトでHTTPのRequest内容が格納されている
 　その他は https://nginx.org/en/docs/njs/reference.html#http 参照
 * スクリプトの最終行の下記記述で各関数をexportし、NGINXから呼び出せるようにしている
 ```
@@ -83,8 +83,9 @@ export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 * M5Stick-CでJsonをPOSTする　https://qiita.com/poruruba/items/4bf6a52520e431a8f4a5
 
 ## 4.2 サーバ側
-* https://nginx.org/en/docs/njs/reference.html
-* https://nginx.org/en/docs/http/ngx_http_js_module.html
+* njsリファンレンス https://nginx.org/en/docs/njs/reference.html
+* http API https://nginx.org/en/docs/http/ngx_http_js_module.html
+* ファイルシステムAPI https://nginx.org/en/docs/njs/reference.html#njs_api_fs
 
 # 5. 実行例
 *
