@@ -81,19 +81,46 @@ function getUri(r) {
 ```
 export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 ```
-# 4.参考文献
-## 4.1 エッジ側
+
+# 4. 実行例
+## 4.1 `getUri(r)`
+* http://Server/GETURI へhttp GETする
+* アクセスしたURIを表示して正常終了
+
+## 4.2 `postStab(r)`
+* http://Server/POSTSTAB へhttp POSTする
+* 何もせず正常終了（アクセスログには残る）
+
+## 4.3 `getArgs(r)`
+* http://Server/GET へhttp GETする
+* 上記URLにアクセスする際のURL変数を表示して正常終了
+
+## 4.4 `getArgs2Fs(r)`
+* http://Server/GET2FS へhttp GETする
+* 上記URLにアクセスする際のURL変数を`/tmp/njs_storage`ファイルに追記する
+* 追記した内容を表示して正常終了
+* http GETでサーバ側にデータ送信が可能となる
+
+## 4.5 `postBody2Fs(r)`
+* http://Server/POST2FS へhttp POSTする
+* 上記URLにアクセスするmessge Bodyを`/tmp/njs_storage`ファイルに追記する
+* 追記した内容を表示して正常終了
+
+## 4.6 `readFs(r)`
+* http://Server/READ へhttp POSTする
+* `/tmp/njs_storage`ファイルの内容を表示して正常終了
+
+# 5.参考文献
+## 5.1 エッジ側
 * M5Atom Liteがやってきた：led_menu https://qiita.com/fumi38g/items/60c3f371adff025d6eae
 * M5Stick-CでJsonをPOSTする　https://qiita.com/poruruba/items/4bf6a52520e431a8f4a5
 
-## 4.2 サーバ側
+## 5.2 サーバ側
 * njs-examples https://github.com/xeioex/njs-examples
 * njsリファンレンス https://nginx.org/en/docs/njs/reference.html
 * http API https://nginx.org/en/docs/http/ngx_http_js_module.html
 * ファイルシステムAPI https://nginx.org/en/docs/njs/reference.html#njs_api_fs
 
-# 5. 実行例
-*
 # 6.お試しサイト
 *
 

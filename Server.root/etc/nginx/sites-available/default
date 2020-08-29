@@ -31,6 +31,10 @@ server {
         js_content his.postStab;
     }
 
+    location /GET {
+        js_content his.getArgs2Fs;
+    }
+
     location /GET2FS {
         js_content his.getArgs2Fs;
     }
