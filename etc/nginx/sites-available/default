@@ -1,0 +1,57 @@
+# Default server configuration
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    access_log  /var/log/nginx/access.log  combined;
+
+# SSL configuration
+#
+# listen 443 ssl default_server;
+# listen [::]:443 ssl default_server;
+#
+
+    root /var/www/html;
+
+# Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /GETURI {
+        js_content his.getUri;
+    }
+
+    location /POSTSTAB {
+        js_content his.postStab;
+    }
+
+    location /GET2FS {
+        js_content his.getArgs2Fs;
+    }
+
+    location /POST2FS {
+        js_content his.postBody2Fs;
+    }
+
+    location /READ {
+        js_content his.readFs;
+    }
+
+#        location /flush {
+#            js_content his.flush;
+#        }
+
+
+# deny access to .htaccess files, if Apache's document root
+# concurs with nginx's one
+
+    #location ~ /\.ht {
+        #deny all;
+    #}
+}
