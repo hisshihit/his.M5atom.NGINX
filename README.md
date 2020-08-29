@@ -1,12 +1,14 @@
 # his.M5atom.NGINX abstruct
-1. using M5Atom push bottun to http POST
-1. receive POST with Raspberry Pi NGINX server
+1. using M5Atom push bottun to http GET/POST
+1. receive GET/POST with Raspberry Pi NGINX server
 1. NGINX njs setting to save M5Atom POST message body
+1. Also NGINX njs can save M5Atom GET?a=1&b=hoge extension
 
 # 概要
-1. M5Atomのpushボタンから、http POSTを実行する。
-1. ラズパイ上のNGIXサーバでPOSTを受け取る。
-1. NGINX組み込みのJavascriptエンジンであるnjsでPOSTメッセージをファイルに書き込む。
+1. M5Atomのpushボタンから、http GET/POSTを実行する
+1. ラズパイ上のNGIXサーバでGET/POSTを受け取る
+1. NGINX組み込みのJavascriptエンジンであるnjsでPOSTメッセージをファイルに書き込む
+1. 同じくM5AtomからのGET時のURI引数をファイルに書き込む
 
 # 1.環境
 ## 1.1 エッジ側
@@ -23,7 +25,7 @@
 * M5Atomで動作させるArduino IDEのソースコード
 * ボタンを押すたびにLEDの色が変わる
 * ボタンを長押しすると、Wifi経由であらかじめ指定したURLにhttp POSTする
-* 参考にしたのはこちらですm(_|_)m
+* 参考にしたのはこちら↓ですm(_|_)m
 https://qiita.com/fumi38g/items/60c3f371adff025d6eae
 
 # 3.サーバ側の設定
@@ -38,17 +40,17 @@ http {
   js_import his from js/his.js;
 }
 ```
-* modules/ngx_http_js_module.soは、/etc/nginx/modules/ngx_http_js_module.soである
+* modules/ngx_http_js_module.soは、/etc/nginx/modules/ngx_http_js_module.soである<br>
 　**つまり、`/etc/nginx/`からの相対アドレス**で記載する
-* `js/his.js`は/etc/nginx/js/his.jsである
+* `js/his.js`は/etc/nginx/js/his.jsである<br>
   **これも、`/etc/nginx/`からの相対アドレス**で記載する
 
 >なお、現仕様では`js_import`の代わりに`js_include`という記法も使えたようだが、
->今後は廃止となり`js_import`が推奨されている。
->https://nginx.org/en/docs/http/ngx_http_js_module.html#js_include
+>今後は廃止となり`js_import`を使うことが推奨されている<br>
+>https://nginx.org/en/docs/http/ngx_http_js_module.html#js_include 参照
 >
 >また、2020/8/29時点では`js_include`は単独では使用可能だったが、
->同時に同一nginx.conf内で`js_import`は使えず、エラーとなった。
+>同時に同一nginx.conf内で`js_import`は使えず、エラーとなった<br>
 >上記エラーの原因がなかなか掴めず悩んだが、syslogを見たら、ズバリ書いてあった(^^;
 
 ## 3.2 <a href="./Server.root/etc/nginx/sites-available/default">default</a>
@@ -61,8 +63,7 @@ http {
         js_content his.getUri;
     }
 ```
-* 上記は、http://Server/GETURI にアクセスした場合に、`js_import`したhisというクラスの
-`getUri`関数[function]を呼び出すと設定している
+* 上記は、http://Server/GETURI にアクセスした場合に、`js_import`したhisというクラスの`getUri`関数[function]を呼び出すと設定している
 
 ## 3.3 <a href="./Server.root/etc/nginx/js/his.js">his.js</a>
 * njsのスクリプト本体
@@ -75,7 +76,7 @@ function getUri(r) {
     r.return(200, r.uri);
 }
 ```
-* `r`はnjs組み込みオブジェクトでHTTPのRequest内容が格納されている
+* `r`はnjs組み込みオブジェクトでHTTPのRequest内容が格納されている<br>
 　その他は https://nginx.org/en/docs/njs/reference.html#http 参照
 * スクリプトの最終行の下記記述で各関数をexportし、NGINXから呼び出せるようにしている
 ```
@@ -93,22 +94,25 @@ export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 
 ## 4.3 `getArgs(r)`
 * http://Server/GET へhttp GETする
-* 上記URLにアクセスする際のURL変数を表示して正常終了
+* 上記URLにアクセスする際のURL引数(?)を表示して正常終了
 
 ## 4.4 `getArgs2Fs(r)`
 * http://Server/GET2FS へhttp GETする
-* 上記URLにアクセスする際のURL変数を`/tmp/njs_storage`ファイルに追記する
+* 上記URLにアクセスする際のURL引数(?)を`/tmp/njs_storage`ファイルに追記する<br>
+  **尚、/tmpはファイルシステムの絶対パスである**
 * 追記した内容を表示して正常終了
 * http GETでサーバ側にデータ送信が可能となる
 
 ## 4.5 `postBody2Fs(r)`
 * http://Server/POST2FS へhttp POSTする
-* 上記URLにアクセスするmessge Bodyを`/tmp/njs_storage`ファイルに追記する
+* 上記URLにアクセスするmessge Bodyを`/tmp/njs_storage`ファイルに追記する<br>
+  **尚、/tmpはファイルシステムの絶対パスである**
 * 追記した内容を表示して正常終了
 
 ## 4.6 `readFs(r)`
-* http://Server/READ へhttp POSTする
-* `/tmp/njs_storage`ファイルの内容を表示して正常終了
+* http://Server/READ へhttp GETする
+* `/tmp/njs_storage`ファイルの内容を表示して正常終了<br>
+  **尚、/tmpはファイルシステムの絶対パスである**
 
 # 5.参考文献
 ## 5.1 エッジ側
