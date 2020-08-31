@@ -108,20 +108,15 @@ export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 
 * /tmp/njs_storage
 ```
-{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "Us
-erAgent" : "ESP32HTTPClient" , "menu" : 4 , "Color" : "Blue"}
-{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "Us
-erAgent" : "ESP32HTTPClient" , "menu" : 5 , "Color" : "Yellow"}
-{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "Us
-erAgent" : "ESP32HTTPClient" , "menu" : 2 , "Color" : "Red"}
+{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "UserAgent" : "ESP32HTTPClient" , "menu" : 4 , "Color" : "Blue"}
+{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "UserAgent" : "ESP32HTTPClient" , "menu" : 5 , "Color" : "Yellow"}
+{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "UserAgent" : "ESP32HTTPClient" , "menu" : 2 , "Color" : "Red"}
 ```
 
 * /var/log/nginx/access.log
 ```
-192.168.0.117 - - [31/Aug/2020:16:36:52 +0900] "GET /GET2FS?menu=4&Color=\x22Blu
-e\x22 HTTP/1.1" 200 142 "-" "ESP32HTTPClient"
-192.168.0.117 - - [31/Aug/2020:16:36:56 +0900] "GET /GET2FS?menu=5&Color=\x22Yel
-low\x22 HTTP/1.1" 200 144 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:36:52 +0900] "GET /GET2FS?menu=4&Color=\x22Blue\x22 HTTP/1.1" 200 142 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:36:56 +0900] "GET /GET2FS?menu=5&Color=\x22Yellow\x22 HTTP/1.1" 200 144 "-" "ESP32HTTPClient"
 192.168.0.117 - - [31/Aug/2020:16:41:34 +0900] "GET /GET2FS?menu=2&Color=\x22Red\x22 HTTP/1.1" 200 141 "-" "ESP32HTTPClient"
 ```
 
@@ -143,18 +138,12 @@ SELECTED:menu =6
 
 * /var/log/nginx/access.log
 ```
-192.168.0.117 - - [31/Aug/2020:16:18:14 +0900] "POST /POST2FS?Red HTTP/1.1" 200 
-0 "-" "ESP32HTTPClient"
-192.168.0.117 - - [31/Aug/2020:16:18:18 +0900] "POST /POST2FS?Green HTTP/1.1" 20
-0 0 "-" "ESP32HTTPClient"
-192.168.0.117 - - [31/Aug/2020:16:18:25 +0900] "POST /POST2FS?Yellow HTTP/1.1" 2
-00 0 "-" "ESP32HTTPClient"
-192.168.0.117 - - [31/Aug/2020:16:19:40 +0900] "POST /POST2FS?BlueGreen HTTP/1.1
-" 200 0 "-" "ESP32HTTPClient"
-192.168.0.117 - - [31/Aug/2020:16:19:52 +0900] "POST /POST2FS?Pink HTTP/1.1" 200
- 0 "-" "ESP32HTTPClient"
-192.168.0.117 - - [31/Aug/2020:16:19:55 +0900] "POST /POST2FS?Pink HTTP/1.1" 200
- 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:18:14 +0900] "POST /POST2FS?Red HTTP/1.1" 200 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:18:18 +0900] "POST /POST2FS?Green HTTP/1.1" 200 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:18:25 +0900] "POST /POST2FS?Yellow HTTP/1.1" 200 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:19:40 +0900] "POST /POST2FS?BlueGreen HTTP/1.1" 200 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:19:52 +0900] "POST /POST2FS?Pink HTTP/1.1" 200 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:19:55 +0900] "POST /POST2FS?Pink HTTP/1.1" 200 0 "-" "ESP32HTTPClient"
 ```
 
 ## 4.6 `readFs(r)`
