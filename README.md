@@ -21,12 +21,15 @@
 * NGINX
 
 # 2.エッジ側スクリプト
-## 2.1 <a href="./M5Atom/his.LedMenu2POST.atom.ino">his.LedMenu2POST.atom.ino</a>
+## 2.1 <a href="./M5Atom/his.LedMenu.POST2FS.atom.ino">his.LedMenu.POST2FS.atom.ino</a>
 * M5Atomで動作させるArduino IDEのソースコード
 * ボタンを押すたびにLEDの色が変わる
 * ボタンを長押しすると、Wifi経由であらかじめ指定したURLにhttp POSTする
-* 参考にしたのはこちら↓ですm(_|_)m
-https://qiita.com/fumi38g/items/60c3f371adff025d6eae
+
+## 2.2 <a href="./M5Atom/his.LedMenu.GET2FS.atom.ino">his.LedMenu.GET2FS.atom.ino</a>
+* M5Atomで動作させるArduino IDEのソースコード
+* ボタンを押すたびにLEDの色が変わる
+* ボタンを長押しすると、Wifi経由であらかじめ指定したURLにhttp GETする
 
 # 3.サーバ側の設定
 ## 3.1 <a href="./Server.root/etc/nginx/nginx.conf">nginx.conf</a>
@@ -103,11 +106,56 @@ export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 * 追記した内容を表示して正常終了
 * http GETでサーバ側にデータ送信が可能となる
 
+* /tmp/njs_storage
+```
+{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "Us
+erAgent" : "ESP32HTTPClient" , "menu" : 4 , "Color" : "Blue"}
+{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "Us
+erAgent" : "ESP32HTTPClient" , "menu" : 5 , "Color" : "Yellow"}
+{ "Method" : "GET" , "RemoteAddress" : "192.168.0.117" , "URI" : "/GET2FS" , "Us
+erAgent" : "ESP32HTTPClient" , "menu" : 2 , "Color" : "Red"}
+```
+
+* /var/log/nginx/access.log
+```
+192.168.0.117 - - [31/Aug/2020:16:36:52 +0900] "GET /GET2FS?menu=4&Color=\x22Blu
+e\x22 HTTP/1.1" 200 142 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:36:56 +0900] "GET /GET2FS?menu=5&Color=\x22Yel
+low\x22 HTTP/1.1" 200 144 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:41:34 +0900] "GET /GET2FS?menu=2&Color=\x22Red\x22 HTTP/1.1" 200 141 "-" "ESP32HTTPClient"
+```
+
 ## 4.5 `postBody2Fs(r)`
 * http://Server/POST2FS へhttp POSTする
 * 上記URLにアクセスするmessge Bodyを`/tmp/njs_storage`ファイルに追記する<br>
   **尚、/tmpはファイルシステムの絶対パスである**
 * 追記した内容を表示して正常終了
+
+* /tmp/njs_storage
+```
+SELECTED:menu =1
+SELECTED:menu =2
+SELECTED:menu =4
+SELECTED:menu =5
+SELECTED:menu =6
+SELECTED:menu =6
+```
+
+* /var/log/nginx/access.log
+```
+192.168.0.117 - - [31/Aug/2020:16:18:14 +0900] "POST /POST2FS?Red HTTP/1.1" 200 
+0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:18:18 +0900] "POST /POST2FS?Green HTTP/1.1" 20
+0 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:18:25 +0900] "POST /POST2FS?Yellow HTTP/1.1" 2
+00 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:19:40 +0900] "POST /POST2FS?BlueGreen HTTP/1.1
+" 200 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:19:52 +0900] "POST /POST2FS?Pink HTTP/1.1" 200
+ 0 "-" "ESP32HTTPClient"
+192.168.0.117 - - [31/Aug/2020:16:19:55 +0900] "POST /POST2FS?Pink HTTP/1.1" 200
+ 0 "-" "ESP32HTTPClient"
+```
 
 ## 4.6 `readFs(r)`
 * http://Server/READ へhttp GETする
@@ -126,7 +174,7 @@ export default {getUri, postStab, getArgs, getArgs2Fs, postBody2Fs, readFs};
 * ファイルシステムAPI https://nginx.org/en/docs/njs/reference.html#njs_api_fs
 
 # 6.お試しサイト
-*
+* 未定
 
 # 7.今後の予定
 * 
